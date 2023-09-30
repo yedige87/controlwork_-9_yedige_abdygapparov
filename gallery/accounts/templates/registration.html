@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 
+{% block menu %}
+    <a class="btn btn-primary" href="{% url 'home' %}"> На главную </a> &nbsp
+{% endblock %}
+
 {% block content %}
     <h3>Регистрация нового пользователя</h3>
         <form method="post" enctype="multipart/form-data">

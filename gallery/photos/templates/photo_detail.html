@@ -4,6 +4,8 @@
 
 {% block menu %}
 
+    <a class="btn btn-primary" href="{% url 'home' %}"> На главную </a> &nbsp
+
     {% if user.is_authenticated %}
 
         {% if photo.author.id == user.id %}
@@ -26,15 +28,30 @@
         <p>
             <img src="{{ photo.photo.url }}" height="auto" width="500">
         </p>
-        <p>Description: {{ photo.description }}</p>
-        <p>Author:
+        <p>Описание: {{ photo.description }}</p>
+        <p>Автор:
             <a href="{% url 'profile_view' pk=photo.author.pk %}">
                 {{ photo.author }}
             </a>
         </p>
 
-        <p>Created_at: {{ photo.created_at }} </p>
+        <p>Создано: {{ photo.created_at }} </p>
+        <p>
+            {% if photo.likers.all.count > 0 %}
+                <p> Likers:
 
+                {% for liker in photo.likers.all %}
+                    <a href="{% url 'profile_view' pk=liker.pk %}">
+                       <span> {{liker}}, </span>
+                    </a>
+
+                {% endfor %}
+                </p>
+
+            {% else %}
+                <p>No likers</p>
+            {% endif %}
+        </p>
 
     {% endif%}
 

@@ -2,6 +2,8 @@
 
 {% block menu %}
 
+<a class="btn btn-primary" href="{% url 'home' %}"> На главную </a> &nbsp
+
 {% if profile_owner.id == user.id %}
     <a class="btn btn-primary" href="{% url 'photo_create' %}">Добавить фото</a>
     <a class="btn btn-primary" href="{% url 'avatar_update' profile_owner.pk %}"> Редактировать профайл </a>
@@ -27,7 +29,11 @@
             <p>
                 <img src="{{ photo.photo.url }}" height="auto" width="500">
             </p>
-              <a class="btn btn-primary" href="{% url 'unfavor' photo.pk %}"> Удалить из избранного </a>
+
+              {% if profile_owner.id == user.id %}
+                <a class="btn btn-primary" href="{% url 'unfavor' photo.pk %}"> Удалить из избранного </a>
+              {% endif %}
+
               <p>{{ photo.description }}</p>
             </p>
             <span>Автор: {{ photo.author }} </span>
