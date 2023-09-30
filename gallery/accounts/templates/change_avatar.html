@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+
+{% block title %} Редактировать пользователя {% endblock %}
+{% block menu %}
+    <a href="{% url 'profile_view' user_obj.pk %}"> Назад </a>
+{% endblock %}
+{% block content %}
+    <h3> Поменять личные данные пользователя {{user_obj.full_name}}</h3>
+
+{% if user_obj.avatar %}
+    <img src="{{ user_obj.avatar.url }}" height="200" width="auto">
+{% else %}
+  <span> Фото отсутствует </span>
+{% endif %}
+
+    <form action="{% url 'avatar_update' user_obj.pk %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input class="btn btn-primary" type="submit" value="Сохранить">
+        <a href="{% url 'profile_view' user_obj.pk %}" class="btn btn-primary">Отменить</a>
+    </form>
+
+{% endblock %}

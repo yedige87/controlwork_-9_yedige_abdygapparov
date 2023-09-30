@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block menu %}
+
+{% if profile_owner.id == user.id %}
+<a class="btn btn-primary" href="{% url 'avatar_update' profile_owner.pk %}"> Редактировать профайл </a>
+<a class="btn btn-primary" href="{% url 'password_update' profile_owner.pk %}"> Сменить пароль </a>
+
+{% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+<br/> <br/>
+<img src="{{ profile_owner.avatar.url }}" height="auto" width="500">
+<h3>Личный кабинет пользователя: {{ profile_owner.username }}</h3> <br/> <br/>
+
+<h2> Избранное </h2>
+
+
+{% endblock %}
