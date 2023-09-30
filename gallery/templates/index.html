@@ -14,4 +14,16 @@
 {% block content %}
 <h2>Галерея</h2>
 
+{% for photo in photos %}
+<br/>
+    <a href="{% url 'photo_detail' pk=photo.pk %}">
+        <img src="{{ photo.photo.url }}" height="auto" width="500">
+    </a>
+    <p>Подпись: {{photo.description }}</p>
+    <p>Автор: {{ photo.author }} Дата: {{ photo.created_at | date:"d.m.Y H:i:s" }} </p>
+{% empty %}
+    <p>Фото отсутствует</p>
+
+{% endfor %}
+
 {% endblock %}

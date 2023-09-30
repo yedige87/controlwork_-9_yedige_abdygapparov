@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block title %}Post confirm delete{% endblock %}
+
+{% block menu %}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Вы действительно хотите удалить фото?</h1>
+        <p>
+            <img src="{{ photo.photo.url }}" height="auto" width="500">
+        </p>
+    <p>Автор: {{ photo.author }}</p>
+    <p>Описание: {{ photo.description }}</p>
+        <form action="{% url 'confirm_delete' photo.pk %}" method="post">
+            {% csrf_token %}
+            <p><input class="btn btn-primary" type="submit" value="Удалить"></p>
+            <p><a href="{% url 'home' %}" class="btn btn-primary">Отмена</a></p>
+        </form>
+    </div>
+{% endblock %}

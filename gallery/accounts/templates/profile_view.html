@@ -3,9 +3,9 @@
 {% block menu %}
 
 {% if profile_owner.id == user.id %}
-<a class="btn btn-primary" href="{% url 'avatar_update' profile_owner.pk %}"> Редактировать профайл </a>
-<a class="btn btn-primary" href="{% url 'password_update' profile_owner.pk %}"> Сменить пароль </a>
-
+    <a class="btn btn-primary" href="{% url 'photo_create' %}">Добавить фото</a>
+    <a class="btn btn-primary" href="{% url 'avatar_update' profile_owner.pk %}"> Редактировать профайл </a>
+    <a class="btn btn-primary" href="{% url 'password_update' profile_owner.pk %}"> Сменить пароль </a>
 {% endif %}
 
 {% endblock %}

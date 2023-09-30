@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+
+{% block title %} Photo Update {% endblock %}
+
+{% block content %}
+    <h3>Редактировать фото - {{ photo.photo.url }}</h3>
+    <h3>Автор фото - "{{ user.username }}" </h3>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form square-inputs">
+        {% csrf_token %}
+        {% bootstrap_form form show_placeholder=False %}
+
+    </div>
+    <div class="form_row">
+        {% bootstrap_button button_type="submit" content='Изменить фото' button_class="btn btn-primary" %}
+        <a href="{% url 'home' %}">{% bootstrap_button button_type="submit" content='Отменить' button_class="btn btn-primary" %}</a>
+    </div>
+</form>
+{% endblock %}

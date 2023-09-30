@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+
+{% block menu %}
+
+    {% if user.is_authenticated %}
+
+        {% if photo.author.id == user.id %}
+        <a class="btn btn-primary" href="{% url 'photo_update' pk=photo.pk %}"> Редактировать фото </a> &nbsp
+        <a class="btn btn-primary" href="{% url 'photo_delete' pk=photo.pk %}"> Удалить фото </a> &nbsp
+        {% endif %}
+
+    {% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<br/>
+<h2> Информация о фото </h2>
+<br/>
+
+    {% if photo %}
+        <p>
+            <img src="{{ photo.photo.url }}" height="auto" width="500">
+        </p>
+        <p>Description: {{ photo.description }}</p>
+        <p>Author:
+            <a href="{% url 'profile_view' pk=photo.author.pk %}">
+                {{ photo.author }}
+            </a>
+        </p>
+
+        <p>Created_at: {{ photo.created_at }} </p>
+
+
+    {% endif%}
+
+{% endblock %}
