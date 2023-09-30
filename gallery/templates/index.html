@@ -15,10 +15,10 @@
 <h2>Галерея</h2>
 
 {% if photos %}
-    <div style="display: flex;flex-wrap: wrap;">
+    <div class="items">
         {% for photo in photos %}
 
-        <div style="flex-basis: 50%;">
+        <div class="item">
           <a> <br/>
             <p>
                 <a href="{% url 'photo_detail' pk=photo.pk %}">
