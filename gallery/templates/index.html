@@ -14,16 +14,60 @@
 {% block content %}
 <h2>Галерея</h2>
 
-{% for photo in photos %}
-<br/>
-    <a href="{% url 'photo_detail' pk=photo.pk %}">
-        <img src="{{ photo.photo.url }}" height="auto" width="500">
-    </a>
-    <p>Подпись: {{photo.description }}</p>
-    <p>Автор: {{ photo.author }} Дата: {{ photo.created_at | date:"d.m.Y H:i:s" }} </p>
-{% empty %}
-    <p>Фото отсутствует</p>
+{% if photos %}
+    <div style="display: flex;flex-wrap: wrap;">
+        {% for photo in photos %}
 
-{% endfor %}
+        <div style="flex-basis: 50%;">
+          <a> <br/>
+            <p>
+                <a href="{% url 'photo_detail' pk=photo.pk %}">
+                    <img src="{{ photo.photo.url }}" height="auto" width="500">
+                </a>
+            </p>
+            <p>
+                {% if user.is_authenticated %}
+
+                {% if user in photo.likers.all %}
+                    <a href="{% url 'like_unlike' photo.pk %}">
+                        <img src="/static/pics/favor.ico" height="auto" width="20">
+                    </a>
+
+                {% else %}
+                    <a href="{% url 'like_unlike' photo.pk %}">
+                        <img src="/static/pics/nofavor.png" height="auto" width="20">
+                    </a>
+                {% endif %}
+
+                {% endif %}
+
+                <span>{{ photo.description }}</span>
+
+            </p>
+            <span>Автор: {{ photo.author }} </span>
+            <span>Дата: {{ photo.created_at | date:"d.m.Y H:i:s" }}</span> <br/> <br/>
+            <p>
+                {% if photo.likers.all.count > 0 %}
+                    <span>Фото лайкнули: </span>
+
+                    {% for liker in photo.likers.all %}
+                        <span><a href="{% url 'profile_view' liker.pk %}">{{liker}},</a> </span>
+                    {% endfor %}
+
+                {% else %}
+                    <span>No likers</span>
+                {% endif %}
+            </p>
+          </a>
+        </div>
+
+    {% endfor %}
+    </div>
+
+
+{% else %}
+    <p>Gallery is empty</p>
+
+{% endif %}
 
 {% endblock %}

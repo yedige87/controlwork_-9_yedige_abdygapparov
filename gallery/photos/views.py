@@ -62,3 +62,27 @@ class PhotoDeleteView(DeleteView):
     model = Photo
     success_url = reverse_lazy('home')
     success_message = 'Фото удалено!'
+
+
+def like_unlike(request, pk):
+    curr_user = request.user
+    if not curr_user.is_authenticated:
+        return redirect('home')
+    photo = Photo.objects.get(pk=pk)
+    if curr_user in photo.likers.all():
+        photo.likers.remove(curr_user)
+    else:
+        photo.likers.add(curr_user)
+    photo.save()
+    return redirect('home')
+
+
+def unfavor(request, pk):
+    curr_user = request.user
+    if not curr_user.is_authenticated:
+        return redirect('home')
+    photo = Photo.objects.get(pk=pk)
+    if curr_user in photo.likers.all():
+        photo.likers.remove(curr_user)
+        photo.save()
+    return reverse('profile_view', kwargs={'pk': curr_user.pk})

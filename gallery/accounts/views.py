@@ -6,6 +6,7 @@ from django.views import View
 from django.views.generic import CreateView, TemplateView, DetailView, UpdateView
 
 from accounts.forms import GalleryUserCreationForm, LoginForm, GalleryUserUpdateForm, GalleryUserChangePasswordForm
+from photos.models import Photo
 
 
 # Create your views here.
@@ -67,7 +68,7 @@ class ProfileView(DetailView):
         id = kwargs['pk']
         CustUser = get_user_model()
         prof_user = CustUser.objects.get(pk=id)
-        self.extra_context = {'profile_owner': prof_user}
+        self.extra_context = {'profile_owner': prof_user, 'photos': Photo.objects.all()}
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)

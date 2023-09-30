@@ -17,6 +17,28 @@
 <h3>Личный кабинет пользователя: {{ profile_owner.username }}</h3> <br/> <br/>
 
 <h2> Избранное </h2>
+{% if photos %}
 
+    {% for photo in photos %}
+
+        <div>
+          <a> <br/>
+              {% if profile_owner in photo.likers.all %}
+            <p>
+                <img src="{{ photo.photo.url }}" height="auto" width="500">
+            </p>
+              <a class="btn btn-primary" href="{% url 'unfavor' photo.pk %}"> Удалить из избранного </a>
+              <p>{{ photo.description }}</p>
+            </p>
+            <span>Автор: {{ photo.author }} </span>
+            <span>Дата: {{ photo.created_at | date:"d.m.Y H:i:s" }}</span> <br/> <br/>
+              {% endif %}
+
+    {% endfor %} <br/><br/>
+
+{% else %}
+<p>Gallery is empty</p>
+
+{% endif %}
 
 {% endblock %}
