@@ -1,4 +1,5 @@
 from django.contrib.auth import login, authenticate, logout, get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -74,7 +75,7 @@ class ProfileView(DetailView):
         return self.render_to_response(context)
 
 
-class AvatarUpdateView(UpdateView):
+class AvatarUpdateView(LoginRequiredMixin, UpdateView):
     model = get_user_model()
     form_class = GalleryUserUpdateForm
     template_name = 'change_avatar.html'
@@ -84,7 +85,7 @@ class AvatarUpdateView(UpdateView):
         return reverse('profile_view', kwargs={'pk': self.object.pk})
 
 
-class PasswordUpdateView(UpdateView):
+class PasswordUpdateView(LoginRequiredMixin, UpdateView):
     model = get_user_model()
     form_class = GalleryUserChangePasswordForm
     template_name = 'change_password.html'

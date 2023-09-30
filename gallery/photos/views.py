@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
@@ -15,7 +16,7 @@ class HomeView(ListView):
     ordering = ('-created_at',)
 
 
-class PhotoCreateView(CreateView):
+class PhotoCreateView(LoginRequiredMixin, CreateView):
     model = Photo  # Указываем модель
     form_class = PhotoForm
     template_name = 'photo_create.html'  # Путь к шаблону формы создания
@@ -39,7 +40,7 @@ class PhotoDetailView(DetailView):
     context_object_name = 'photo'
 
 
-class PhotoUpdateView(UpdateView):
+class PhotoUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'photo_update.html'
     form_class = PhotoForm
     model = Photo
@@ -57,7 +58,7 @@ class PhotoUpdateView(UpdateView):
         return reverse('photo_detail', kwargs={'pk': self.object.pk})
 
 
-class PhotoDeleteView(DeleteView):
+class PhotoDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'photo_confirm_delete.html'
     model = Photo
     success_url = reverse_lazy('home')
